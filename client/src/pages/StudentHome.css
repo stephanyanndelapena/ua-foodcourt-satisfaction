@@ -1,0 +1,135 @@
+:root {
+  --ui-bg: #ffffff;
+  --ui-text: #0b1f3b; /* dark blue */
+  --ui-muted: rgba(11, 31, 59, 0.65);
+  --ui-border: rgba(11, 31, 59, 0.12);
+  --ui-soft: rgba(11, 31, 59, 0.04);
+
+  --ui-red: #7a1020; /* dark red */
+  --ui-mustard: #c9a227; /* mustard */
+
+  --ui-radius: 16px;
+  --ui-radius-sm: 12px;
+  --ui-shadow: 0 10px 28px rgba(11, 31, 59, 0.08);
+  --ui-shadow-soft: 0 8px 20px rgba(11, 31, 59, 0.06);
+}
+
+.studentHome {
+  background: var(--ui-bg);
+  color: var(--ui-text);
+}
+
+.studentHome__success {
+  background: rgba(201, 162, 39, 0.14);
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  padding: 12px;
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow-soft);
+  margin-bottom: 12px;
+}
+
+.studentHome__title {
+  margin: 0 0 12px 0;
+  letter-spacing: 0.2px;
+}
+
+.studentHome__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+/* Card */
+.stallCard {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--ui-bg);
+  box-shadow: var(--ui-shadow-soft);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  position: relative;
+}
+
+.stallCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ui-shadow);
+  border-color: rgba(11, 31, 59, 0.22);
+}
+
+/* Full picture display */
+.stallCard__media {
+  height: 240px;
+  background: var(--ui-soft);
+  position: relative;
+}
+
+.stallCard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.stallCard__noimg {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--ui-muted);
+}
+
+/* Hover overlay (hidden until hover) */
+.stallCard__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  background: linear-gradient(
+    to top,
+    rgba(11, 31, 59, 0.86),
+    rgba(11, 31, 59, 0.15) 55%,
+    rgba(11, 31, 59, 0)
+  );
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.stallCard:hover .stallCard__overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stallCard__overlayInner {
+  color: #fff;
+}
+
+.stallCard__name {
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.stallCard__number {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+/* Back button */
+.studentHome__backBtn {
+  margin-bottom: 12px;
+  border: 1px solid var(--ui-border);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  border-radius: var(--ui-radius-sm);
+  padding: 10px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.studentHome__backBtn:hover {
+  background: rgba(11, 31, 59, 0.04);
+  border-color: rgba(11, 31, 59, 0.22);
+}

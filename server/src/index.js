@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(
   session({
     name: process.env.SESSION_COOKIE_NAME || "ua_sid",
-    secret: process.env.SESSION_SECRET,
+    secret: 'replace_this_with_a_long_random_string',
     resave: false,
     saveUninitialized: false,
     store: new pgSession({
