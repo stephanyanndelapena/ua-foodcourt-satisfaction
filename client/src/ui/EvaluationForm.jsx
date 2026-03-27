@@ -45,6 +45,7 @@ function Rating({ label, value, onChange, name }) {
       >
         {[1, 2, 3, 4, 5].map((n) => {
           const checked = value === n;
+
           return (
             <label
               key={n}
@@ -110,14 +111,15 @@ export default function EvaluationForm({ stall, onSubmitted }) {
     suggestions: ""
   });
 
-  function setField(k, v) {
-    setForm((p) => ({ ...p, [k]: v }));
+  function setField(key, value) {
+    setForm((prev) => ({ ...prev, [key]: value }));
   }
 
   async function submit(e) {
     e.preventDefault();
     setErr("");
     setSaving(true);
+
     try {
       const data = await apiFetch("/api/evaluations", {
         method: "POST",
@@ -237,7 +239,12 @@ export default function EvaluationForm({ stall, onSubmitted }) {
 
       <label style={{ display: "grid", gap: 6, marginBottom: 12 }}>
         <span style={{ fontSize: 12, color: UI.colors.muted, fontWeight: 400 }}>What did you like most?</span>
-        <textarea value={form.liked_most} onChange={(e) => setField("liked_most", e.target.value)} rows={2} style={textareaStyle} />
+        <textarea
+          value={form.liked_most}
+          onChange={(e) => setField("liked_most", e.target.value)}
+          rows={2}
+          style={textareaStyle}
+        />
       </label>
 
       <label style={{ display: "grid", gap: 6, marginBottom: 12 }}>
@@ -252,7 +259,12 @@ export default function EvaluationForm({ stall, onSubmitted }) {
 
       <label style={{ display: "grid", gap: 6, marginBottom: 12 }}>
         <span style={{ fontSize: 12, color: UI.colors.muted, fontWeight: 400 }}>Suggestions for the canteen</span>
-        <textarea value={form.suggestions} onChange={(e) => setField("suggestions", e.target.value)} rows={2} style={textareaStyle} />
+        <textarea
+          value={form.suggestions}
+          onChange={(e) => setField("suggestions", e.target.value)}
+          rows={2}
+          style={textareaStyle}
+        />
       </label>
 
       {err && (

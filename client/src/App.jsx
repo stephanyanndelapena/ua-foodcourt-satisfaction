@@ -6,7 +6,7 @@ import AdminHome from "./pages/AdminHome";
 
 const UI = {
   colors: {
-    bg: "#FFFFFF",
+    bg: "#f7f3f3",
     text: "#0B1F3B", // dark blue
     muted: "rgba(11, 31, 59, 0.65)",
     border: "rgba(11, 31, 59, 0.12)",
@@ -56,9 +56,6 @@ export default function App() {
     <div
       style={{
         fontFamily: "system-ui, Arial",
-        padding: 20,
-        maxWidth: 1100,
-        margin: "0 auto",
         background: UI.colors.bg,
         color: UI.colors.text
       }}
@@ -68,6 +65,7 @@ export default function App() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          
           gap: 14,
           padding: 14,
           borderRadius: UI.radius.card,
@@ -115,6 +113,7 @@ export default function App() {
           fontWeight: 900,
           letterSpacing: 0.2,
           margin: "0 0 16px 0",
+          padding: 10,
           lineHeight: 1.1
         }}
       >

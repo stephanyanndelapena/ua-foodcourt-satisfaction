@@ -1,5 +1,16 @@
 import { useState } from "react";
 import { apiFetch } from "../api";
+import { Box, Paper, Typography, TextField, Button, Alert } from "@mui/material";
+
+const UI = {
+  colors: {
+    bg: "#FFFFFF",
+    text: "#0B1F3B",
+    muted: "rgba(11, 31, 59, 0.65)",
+    border: "rgba(11, 31, 59, 0.14)",
+    red: "#7A1020"
+  }
+};
 
 export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -9,6 +20,7 @@ export default function LoginPage({ onLogin }) {
   async function submit(e) {
     e.preventDefault();
     setErr("");
+
     try {
       await apiFetch("/api/auth/login", {
         method: "POST",
@@ -20,204 +32,171 @@ export default function LoginPage({ onLogin }) {
     }
   }
 
-  const UI = {
-    colors: {
-      // Sky-blue overlay tints
-      sky1: "rgba(125, 211, 252, 0.92)",
-      sky2: "rgba(56, 189, 248, 0.78)",
-      sky3: "rgba(14, 165, 233, 0.62)",
-      skyDeep: "rgba(3, 105, 161, 0.55)",
-
-      bg: "#FFFFFF",
-      text: "#0B1F3B",
-      muted: "rgba(11, 31, 59, 0.65)",
-      border: "rgba(11, 31, 59, 0.14)",
-      soft: "rgba(11, 31, 59, 0.04)",
-      red: "#7A1020"
-    },
-    radius: { card: 18, control: 12 },
-    shadowSoft: "0 10px 28px rgba(11,31,59,0.10)"
-  };
-
   return (
-    <div
-      className="__loginRoot"
-      style={{
-        minHeight: "100vh",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        fontFamily: "system-ui, Arial",
-        background: UI.colors.bg
-      }}
-    >
-      {/* LEFT: Image background + sky-blue gradient overlay */}
-      <div
-        className="__loginLeft"
-        style={{
-          position: "relative",
-          display: "grid",
-          placeItems: "center",
-          padding: 24,
-          overflow: "hidden"
+    <Box sx={{ minHeight: "100vh", position: "relative", overflow: "hidden", bgcolor: UI.colors.bg }}>
+      {/* LEFT BG AREA */}
+      <Box
+        sx={{
+          position: "absolute",
+          inset: 0,
+          clipPath: { xs: "inset(0 0 0 0)", md: "inset(0 38% 0 0)" }
         }}
       >
-        {/* Background image (replace with your image path) */}
-        <div
-          style={{
+        <Box
+          sx={{
             position: "absolute",
             inset: 0,
             backgroundImage: `url("/src/images/bg.png")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            transform: "scale(1.03)"
+            transform: "scale(1.12)",
+            animation: "float 12s ease-in-out infinite"
           }}
         />
-
-        {/* Logo */}
-        <img
-          src="/src/images/logo1.png"
-          alt="UA BiteCheck"
-          style={{
-            position: "relative",
-            width: 350,
-            height: "auto",
-            objectFit: "contain",
-            display: "block",
-            filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.22))"
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(165deg, rgba(37,23,97,0.3) 0%, rgba(0,0,0,0.9) 100%)"
           }}
         />
-      </div>
+        <Box sx={{ position: "absolute", inset: 0, display: "flex", placeItems: "center", p: 50 }}>
+          <Box
+            component="img"
+            src="/src/images/logo1.png"
+            alt="UA BiteCheck"
+            sx={{
+              width: 350,
+              height: "auto",
+              filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.45))",
+              animation: "float 6s ease-in-out infinite"
+            }}
+          />
+        </Box>
+      </Box>
 
-      {/* RIGHT: Form panel */}
-      <div
-        className="__loginRight"
-        style={{
-          display: "grid",
-          placeItems: "center",
-          padding: 24,
-          background: UI.colors.bg
+      {/* RIGHT LOGIN AREA */}
+      <Box
+        sx={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          px: { xs: 2, md: 6 },
+          width: { xs: "100%", md: "38%" },
+          ml: { xs: 0, md: "auto" }
         }}
       >
-        <div style={{ width: "100%", maxWidth: 420 }}>
-          <h2
-            style={{
-              margin: "0 0 18px 0",
-              color: UI.colors.text,
-              fontWeight: 900,
-              letterSpacing: 0.2
+        <Box sx={{ width: "100%", maxWidth: 420 }}>
+          <Typography sx={{ color: UI.colors.text, fontWeight: 900, mb: 1.5, fontSize: 24 }}>
+            Login to UA BiteCheck
+          </Typography>
+
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+              borderRadius: 3,
+              background: "rgba(255,255,255,0.92)",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
+              border: `1px solid ${UI.colors.border}`,
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              "&:hover": {
+                transform: "translateY(-6px) scale(1.02)",
+                boxShadow: "0 25px 70px rgba(0,0,0,0.2)"
+              }
             }}
           >
-            Login to UA BiteCheck
-          </h2>
-
-          <form onSubmit={submit} style={{ display: "grid", gap: 12 }}>
-            <label style={{ display: "grid", gap: 6, color: UI.colors.text }}>
-              <span style={{ fontSize: 12, color: UI.colors.muted }}>Email</span>
-              <input
+            <Box component="form" onSubmit={submit} sx={{ display: "grid", gap: 1.5 }}>
+              <TextField
+                label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  width: "100%",
-                  borderRadius: UI.radius.control,
-                  border: `1px solid ${UI.colors.border}`,
-                  padding: "11px 12px",
-                  background: UI.colors.bg,
-                  color: UI.colors.text,
-                  outline: "none"
+                fullWidth
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 2,
+                    transition: "all 0.2s ease",
+                    "&.Mui-focused": {
+                      boxShadow: "0 0 0 3px rgba(201,162,39,0.35)"
+                    }
+                  }
                 }}
               />
-            </label>
 
-            <label style={{ display: "grid", gap: 6, color: UI.colors.text }}>
-              <span style={{ fontSize: 12, color: UI.colors.muted }}>Password</span>
-              <input
+              <TextField
                 type="password"
+                label="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  width: "100%",
-                  borderRadius: UI.radius.control,
-                  border: `1px solid ${UI.colors.border}`,
-                  padding: "11px 12px",
-                  background: UI.colors.bg,
-                  color: UI.colors.text,
-                  outline: "none"
+                fullWidth
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: 2,
+                    transition: "all 0.2s ease",
+                    "&.Mui-focused": {
+                      boxShadow: "0 0 0 3px rgba(201,162,39,0.35)"
+                    }
+                  }
                 }}
               />
-            </label>
 
-            {err && (
-              <div
-                style={{
-                  color: UI.colors.red,
-                  background: "rgba(122,16,32,0.08)",
-                  border: "1px solid rgba(122,16,32,0.30)",
-                  padding: 10,
-                  borderRadius: UI.radius.control
+              {err ? (
+                <Alert severity="error" sx={{ borderRadius: 2 }}>
+                  {err}
+                </Alert>
+              ) : null}
+
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{
+                  mt: 0.5,
+                  borderRadius: 2,
+                  py: 1.25,
+                  fontWeight: 900,
+                  bgcolor: UI.colors.text,
+                  transition: "all 0.2s ease",
+                  "&:hover": { bgcolor: "#08182f", transform: "scale(1.05)" }
                 }}
               >
-                {err}
-              </div>
-            )}
+                Login
+              </Button>
 
-            <button
-              type="submit"
-              style={{
-                marginTop: 6,
-                borderRadius: UI.radius.control,
-                border: `1px solid ${UI.colors.text}`,
-                background: UI.colors.text,
-                color: "#fff",
-                padding: "11px 12px",
-                fontWeight: 900,
-                cursor: "pointer",
-                boxShadow: UI.shadowSoft
-              }}
-            >
-              Login
-            </button>
-          </form>
+              <Box sx={{ mt: 1.5, color: UI.colors.muted, fontSize: 13 }}>
+                <Typography sx={{ fontWeight: 900, color: UI.colors.text, mb: 0.75 }}>Seed accs:</Typography>
+                <Box component="ul" sx={{ m: 0, pl: 2.25, display: "grid", gap: 0.75 }}>
+                  <li>
+                    <Box component="strong" sx={{ color: UI.colors.text }}>
+                      Admin:
+                    </Box>{" "}
+                    admin@ua.edu / Admin123!
+                  </li>
+                  <li>
+                    <Box component="strong" sx={{ color: UI.colors.text }}>
+                      Student:
+                    </Box>{" "}
+                    student@ua.edu / Student123!
+                  </li>
+                </Box>
+              </Box>
+            </Box>
+          </Paper>
+        </Box>
+      </Box>
 
-          <div style={{ marginTop: 18, fontSize: 13, color: UI.colors.muted }}>
-            <div style={{ fontWeight: 900, color: UI.colors.text, marginBottom: 6 }}>Seed accs:</div>
-            <ul style={{ margin: 0, paddingLeft: 18, display: "grid", gap: 6 }}>
-              <li>
-                <span style={{ fontWeight: 900, color: UI.colors.text }}>Admin:</span> admin@ua.edu / Admin123!
-              </li>
-              <li>
-                <span style={{ fontWeight: 900, color: UI.colors.text }}>Student:</span> student@ua.edu / Student123!
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Responsive: stack on mobile */}
+      {/* Floating animation keyframes */}
       <style>
         {`
-          @media (max-width: 860px) {
-            .__loginRoot {
-              grid-template-columns: 1fr !important;
-            }
-
-            .__loginLeft {
-              min-height: 240px;
-            }
-
-            .__loginRight {
-              place-items: start center;
-              padding-top: 18px;
-            }
-          }
-
-          @media (max-width: 420px) {
-            .__loginLeft {
-              min-height: 210px;
-            }
+          @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
           }
         `}
       </style>
-    </div>
+    </Box>
   );
 }

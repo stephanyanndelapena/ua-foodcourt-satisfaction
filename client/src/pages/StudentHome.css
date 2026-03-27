@@ -1,22 +1,24 @@
-:root {
-  --ui-bg: #ffffff;
-  --ui-text: #0b1f3b; /* dark blue */
+/* :root {
+  --ui-bg: #ffffffc2;
+  --ui-text: #0b1f3b;
   --ui-muted: rgba(11, 31, 59, 0.65);
   --ui-border: rgba(11, 31, 59, 0.12);
   --ui-soft: rgba(11, 31, 59, 0.04);
 
-  --ui-red: #7a1020; /* dark red */
-  --ui-mustard: #c9a227; /* mustard */
+  --ui-red: #7a1020;
+  --ui-mustard: #c9a227;
 
   --ui-radius: 16px;
   --ui-radius-sm: 12px;
-  --ui-shadow: 0 10px 28px rgba(11, 31, 59, 0.08);
-  --ui-shadow-soft: 0 8px 20px rgba(11, 31, 59, 0.06);
+  --ui-shadow: 0 14px 34px rgba(11, 31, 59, 0.12);
+  --ui-shadow-soft: 0 10px 22px rgba(11, 31, 59, 0.08);
 }
 
 .studentHome {
-  background: var(--ui-bg);
+  min-height: 100vh;
+  padding: 16px;
   color: var(--ui-text);
+  background: var(--ui-bg);
 }
 
 .studentHome__success {
@@ -31,6 +33,7 @@
 .studentHome__title {
   margin: 0 0 12px 0;
   letter-spacing: 0.2px;
+  font-weight: 900;
 }
 
 .studentHome__grid {
@@ -39,25 +42,30 @@
   gap: 14px;
 }
 
-/* Card */
 .stallCard {
-  border: 1px solid var(--ui-border);
+  border: 1px solid rgba(11, 31, 59, 0.14);
   border-radius: var(--ui-radius);
   overflow: hidden;
   cursor: pointer;
-  background: var(--ui-bg);
+  background: rgba(255,255,255,0.8);
   box-shadow: var(--ui-shadow-soft);
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
   position: relative;
+  backdrop-filter: blur(6px);
 }
 
 .stallCard:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--ui-shadow);
-  border-color: rgba(11, 31, 59, 0.22);
+  border-color: rgba(11, 31, 59, 0.26);
 }
 
-/* Full picture display */
+.stallCard:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(201,162,39,0.22), var(--ui-shadow);
+  border-color: rgba(201,162,39,0.9);
+}
+
 .stallCard__media {
   height: 240px;
   background: var(--ui-soft);
@@ -69,6 +77,12 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scale(1.02);
+  transition: transform 220ms ease;
+}
+
+.stallCard:hover .stallCard__img {
+  transform: scale(1.06);
 }
 
 .stallCard__noimg {
@@ -78,7 +92,6 @@
   color: var(--ui-muted);
 }
 
-/* Hover overlay (hidden until hover) */
 .stallCard__overlay {
   position: absolute;
   inset: 0;
@@ -87,13 +100,13 @@
   padding: 14px;
   background: linear-gradient(
     to top,
-    rgba(11, 31, 59, 0.86),
-    rgba(11, 31, 59, 0.15) 55%,
+    rgba(11, 31, 59, 0.90),
+    rgba(11, 31, 59, 0.20) 55%,
     rgba(11, 31, 59, 0)
   );
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 160ms ease, transform 160ms ease;
+  transform: translateY(10px);
+  transition: opacity 170ms ease, transform 170ms ease;
 }
 
 .stallCard:hover .stallCard__overlay {
@@ -106,30 +119,43 @@
 }
 
 .stallCard__name {
-  font-weight: 900;
+  font-weight: 950;
   line-height: 1.15;
 }
 
 .stallCard__number {
   font-size: 13px;
-  opacity: 0.9;
-  margin-top: 4px;
+  opacity: 0.92;
+  margin-top: 6px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
 }
 
-/* Back button */
+.stallCard__number::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(201,162,39,0.95);
+  box-shadow: 0 0 0 4px rgba(201,162,39,0.18);
+}
+
 .studentHome__backBtn {
   margin-bottom: 12px;
-  border: 1px solid var(--ui-border);
-  background: var(--ui-bg);
+  border: 1px solid rgba(11,31,59,0.16);
+  background: rgba(255,255,255,0.8);
   color: var(--ui-text);
   border-radius: var(--ui-radius-sm);
   padding: 10px 12px;
-  font-weight: 900;
+  font-weight: 950;
   cursor: pointer;
-  transition: background 120ms ease, border-color 120ms ease;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+  backdrop-filter: blur(6px);
 }
 
 .studentHome__backBtn:hover {
   background: rgba(11, 31, 59, 0.04);
   border-color: rgba(11, 31, 59, 0.22);
-}
+  transform: translateY(-1px);
+} */

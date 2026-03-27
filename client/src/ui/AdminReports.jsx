@@ -47,9 +47,11 @@ function Stat({ label, value }) {
 
 export default function AdminReports() {
   const [date, setDate] = useState(todayLocalYYYYMMDD());
+
   const [daily, setDaily] = useState([]);
   const [selectedStall, setSelectedStall] = useState(null);
   const [comments, setComments] = useState([]);
+
   const [err, setErr] = useState("");
   const [loadingDaily, setLoadingDaily] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -63,8 +65,11 @@ export default function AdminReports() {
   async function loadDaily() {
     setErr("");
     setLoadingDaily(true);
+
+    // Reset drill-down UI on reload
     setSelectedStall(null);
     setComments([]);
+
     try {
       const data = await apiFetch(`/api/admin/reports/daily?date=${encodeURIComponent(date)}`);
       setDaily(data.daily);
@@ -79,8 +84,11 @@ export default function AdminReports() {
     setErr("");
     setLoadingComments(true);
     setSelectedStall(stall);
+
     try {
-      const data = await apiFetch(`/api/admin/reports/stall/${stall.stall_id}/comments?date=${encodeURIComponent(date)}`);
+      const data = await apiFetch(
+        `/api/admin/reports/stall/${stall.stall_id}/comments?date=${encodeURIComponent(date)}`
+      );
       setComments(data.comments);
     } catch (e) {
       setErr(e.message);
@@ -106,6 +114,7 @@ export default function AdminReports() {
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10 }}>
         <h3 style={{ margin: 0, color: UI.colors.text, letterSpacing: 0.2 }}>Admin Reports</h3>
+
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <label style={{ display: "flex", gap: 8, alignItems: "center", color: UI.colors.text }}>
             <span style={{ fontSize: 12, color: UI.colors.muted }}>Date:</span>
@@ -123,6 +132,7 @@ export default function AdminReports() {
               }}
             />
           </label>
+
           <button
             onClick={loadDaily}
             disabled={loadingDaily}
@@ -171,15 +181,7 @@ export default function AdminReports() {
         <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0 }}>
           <thead>
             <tr style={{ textAlign: "left" }}>
-              {[
-                "Stall",
-                "Responses",
-                "Service Avg",
-                "Food Avg",
-                "Cleanliness Avg",
-                "Price Avg",
-                "Overall Avg"
-              ].map((h) => (
+              {["Stall", "Responses", "Service Avg", "Food Avg", "Cleanliness Avg", "Price Avg", "Overall Avg"].map((h) => (
                 <th
                   key={h}
                   style={{
@@ -197,6 +199,7 @@ export default function AdminReports() {
               ))}
             </tr>
           </thead>
+
           <tbody>
             {daily.map((r) => (
               <tr
@@ -218,11 +221,19 @@ export default function AdminReports() {
                 <td style={{ padding: 10, borderBottom: `1px solid ${UI.colors.border}`, color: UI.colors.text }}>{r.food_avg}</td>
                 <td style={{ padding: 10, borderBottom: `1px solid ${UI.colors.border}`, color: UI.colors.text }}>{r.cleanliness_avg}</td>
                 <td style={{ padding: 10, borderBottom: `1px solid ${UI.colors.border}`, color: UI.colors.text }}>{r.price_avg}</td>
-                <td style={{ padding: 10, borderBottom: `1px solid ${UI.colors.border}`, color: UI.colors.text, fontWeight: 900 }}>
+                <td
+                  style={{
+                    padding: 10,
+                    borderBottom: `1px solid ${UI.colors.border}`,
+                    color: UI.colors.text,
+                    fontWeight: 900
+                  }}
+                >
                   {r.overall_avg}
                 </td>
               </tr>
             ))}
+
             {daily.length === 0 && !loadingDaily ? (
               <tr>
                 <td colSpan={7} style={{ padding: 12, color: UI.colors.muted }}>
@@ -271,14 +282,18 @@ export default function AdminReports() {
                 <div style={{ marginTop: 10, display: "grid", gap: 10 }}>
                   <div>
                     <div style={{ fontSize: 12, color: UI.colors.muted, marginBottom: 4 }}>What did you like most?</div>
-                    <div style={{ color: UI.colors.text }}>{c.liked_most || <span style={{ color: UI.colors.muted }}>(empty)</span>}</div>
+                    <div style={{ color: UI.colors.text }}>
+                      {c.liked_most || <span style={{ color: UI.colors.muted }}>(empty)</span>}
+                    </div>
                   </div>
+
                   <div>
                     <div style={{ fontSize: 12, color: UI.colors.muted, marginBottom: 4 }}>What can be improved?</div>
                     <div style={{ color: UI.colors.text }}>
                       {c.can_be_improved || <span style={{ color: UI.colors.muted }}>(empty)</span>}
                     </div>
                   </div>
+
                   <div>
                     <div style={{ fontSize: 12, color: UI.colors.muted, marginBottom: 4 }}>Suggestions</div>
                     <div style={{ color: UI.colors.text }}>
