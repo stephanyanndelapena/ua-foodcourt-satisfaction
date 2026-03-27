@@ -27,3 +27,8 @@ cd server
 npm install
 npm run seed
 ```
+
+5) MUI:
+```bash
+npm install react-material-ui-carousel
+npm i @mui/material @mui/icons-material @emotion/react @emotion/styled
