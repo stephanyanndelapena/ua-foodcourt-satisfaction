@@ -11,9 +11,6 @@ pnpm-lock.yaml
 # Builds
 client/dist/
 
-# Local uploads (generated at runtime)
-server/uploads/*
-!.gitkeep
 
 # OS/editor
 .DS_Store
