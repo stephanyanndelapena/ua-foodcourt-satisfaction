@@ -1,7 +1,14 @@
+const API_BASE = import.meta.env.VITE_API_BASE || "";
+
 export async function apiFetch(path, options = {}) {
   const isFormData = options.body instanceof FormData;
 
-  const res = await fetch(path, {
+  const url =
+    path.startsWith("/api") || path.startsWith("/uploads")
+      ? `${API_BASE}${path}`
+      : path;
+
+  const res = await fetch(url, {
     ...options,
     credentials: "include",
     headers: {
@@ -14,7 +21,7 @@ export async function apiFetch(path, options = {}) {
   const data = isJson ? await res.json() : await res.text();
 
   if (!res.ok) {
-    const msg = (data && data.error) ? data.error : "Request failed";
+    const msg = data && data.error ? data.error : "Request failed";
     throw new Error(msg);
   }
   return data;

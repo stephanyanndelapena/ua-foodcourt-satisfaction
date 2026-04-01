@@ -17,13 +17,17 @@ const adminRoutes = require("./routes/admin");
 
 const app = express();
 
-// Ensure uploads folder exists
+app.set("trust proxy", 1);
+
 const uploadDir = path.join(__dirname, "..", process.env.UPLOAD_DIR || "uploads");
 fs.mkdirSync(uploadDir, { recursive: true });
 
+const isProd = process.env.NODE_ENV === "production";
+const clientOrigin = process.env.CLIENT_ORIGIN;
+
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN,
+    origin: clientOrigin,
     credentials: true
   })
 );
@@ -34,7 +38,7 @@ app.use(cookieParser());
 app.use(
   session({
     name: process.env.SESSION_COOKIE_NAME || "ua_sid",
-    secret: 'replace_this_with_a_long_random_string',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: new pgSession({
@@ -43,14 +47,13 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false,
+      sameSite: isProd ? "none" : "lax",
+      secure: isProd,
       maxAge: 1000 * 60 * 60 * 8
     }
   })
 );
 
-// Serve local uploaded images
 app.use("/uploads", express.static(uploadDir));
 
 app.get("/api/health", (req, res) => res.json({ ok: true }));
@@ -61,4 +64,4 @@ app.use("/api/evaluations", evalRoutes);
 app.use("/api/admin", adminRoutes);
 
 const port = process.env.PORT || 4000;
-app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+app.listen(port, "0.0.0.0", () => console.log(`Server running on port ${port}`));
