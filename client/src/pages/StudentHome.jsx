@@ -28,7 +28,7 @@ import ViewCarouselRoundedIcon from "@mui/icons-material/ViewCarouselRounded";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 // ✅ one size for cards (used by grid + carousel)
 const CARD_W = 260;
@@ -137,7 +137,7 @@ export default function StudentHome() {
   async function loadStalls() {
     try {
       setErr("");
-      const data = await apiFetch(`${API_BASE}/api/stalls`);
+      const data = await apiFetch("/api/stalls");
       setStalls(data.stalls || []);
     } catch (e) {
       setErr(e.message || "Failed to load stalls");

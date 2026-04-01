@@ -77,7 +77,7 @@ export default function App() {
         {/* Logo (replace src with your actual logo path) */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <img
-            src="./src/images/logo2.png"
+            src="/images/logo2.png"
             alt="UA BiteCheck"
             style={{
               height: 40,

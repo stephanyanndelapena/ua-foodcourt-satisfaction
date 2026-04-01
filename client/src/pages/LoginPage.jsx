@@ -46,7 +46,7 @@ export default function LoginPage({ onLogin }) {
           sx={{
             position: "absolute",
             inset: 0,
-            backgroundImage: `url("/src/images/bg.png")`,
+            backgroundImage: `url("/images/bg.png")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             transform: "scale(1.12)",
@@ -63,7 +63,7 @@ export default function LoginPage({ onLogin }) {
         <Box sx={{ position: "absolute", inset: 0, display: "flex", placeItems: "center", p: 50 }}>
           <Box
             component="img"
-            src="/src/images/logo1.png"
+            src="/images/logo1.png"
             alt="UA BiteCheck"
             sx={{
               width: 350,

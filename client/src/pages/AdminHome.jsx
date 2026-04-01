@@ -58,7 +58,7 @@ import ViewCarouselRoundedIcon from "@mui/icons-material/ViewCarouselRounded";
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 import BoltRoundedIcon from "@mui/icons-material/BoltRounded";
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 /**
  * ====== Design tokens (edit these first) ======
